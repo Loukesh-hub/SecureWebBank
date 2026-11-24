@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Transaction History</h1>
+    <p class="subtitle">View all your deposits and withdrawals.</p>
+</div>
+
+<div class="section-card">
+
+    {% if transactions %}
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for transaction in transactions %}
+                <tr>
+                    <td>#{{ transaction.id }}</td>
+                    <td>{{ transaction.transaction_type }}</td>
+                    <td>₹{{ "%.2f"|format(transaction.amount) }}</td>
+                    <td>{{ transaction.description }}</td>
+                    <td>{{ transaction.status }}</td>
+                    <td>{{ transaction.created_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% else %}
+
+    <p class="empty-message">
+        No transactions found. Your transactions will appear here.
+    </p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

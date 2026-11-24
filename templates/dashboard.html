@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <div>
+        <h1>Welcome, {{ user_name }}!</h1>
+        <p class="subtitle">Here is your banking overview.</p>
+    </div>
+</div>
+
+<div class="balance-card">
+    <p>Available Balance</p>
+    <h2>₹{{ "%.2f"|format(balance) }}</h2>
+    <p>Account Number: {{ account.account_number if account else "Not available" }}</p>
+    <p>Account Type: {{ account.account_type if account else "Not available" }}</p>
+</div>
+
+<div class="dashboard-actions">
+
+    <a href="{{ url_for('deposit') }}" class="action-card">
+        <span class="action-icon">＋</span>
+        <h3>Deposit Money</h3>
+        <p>Add money to your account.</p>
+    </a>
+
+    <a href="{{ url_for('withdraw') }}" class="action-card">
+        <span class="action-icon">−</span>
+        <h3>Withdraw Money</h3>
+        <p>Withdraw money from your account.</p>
+    </a>
+
+    <a href="{{ url_for('transactions') }}" class="action-card">
+        <span class="action-icon">↗</span>
+        <h3>Transactions</h3>
+        <p>View your transaction history.</p>
+    </a>
+
+</div>
+
+<div class="section-card">
+
+    <h2>Recent Transactions</h2>
+
+    {% if transactions %}
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.transaction_type }}</td>
+                    <td>₹{{ "%.2f"|format(transaction.amount) }}</td>
+                    <td>{{ transaction.description }}</td>
+                    <td>{{ transaction.created_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% else %}
+
+    <p class="empty-message">No transactions yet. Make your first deposit!</p>
+
+    {% endif %}
+
+    <a href="{{ url_for('transactions') }}" class="text-link">
+        View All Transactions →
+    </a>
+
+</div>
+
+{% endblock %}

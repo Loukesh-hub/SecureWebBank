@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>My Bank Account</h1>
+    <p class="subtitle">View your SecureWebBank account details.</p>
+</div>
+
+<div class="section-card">
+
+    <h2>Account Information</h2>
+
+    {% if account %}
+
+    <div class="account-details">
+        <div class="detail-item">
+            <span>Account Holder</span>
+            <strong>{{ user_name }}</strong>
+        </div>
+
+        <div class="detail-item">
+            <span>Account Number</span>
+            <strong>{{ account.account_number }}</strong>
+        </div>
+
+        <div class="detail-item">
+            <span>Account Type</span>
+            <strong>{{ account.account_type }}</strong>
+        </div>
+
+        <div class="detail-item">
+            <span>Available Balance</span>
+            <strong>₹{{ "%.2f"|format(account.balance) }}</strong>
+        </div>
+
+        <div class="detail-item">
+            <span>Account Created</span>
+            <strong>{{ account.created_at }}</strong>
+        </div>
+    </div>
+
+    {% else %}
+
+    <p class="empty-message">No account information found.</p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
